@@ -26,7 +26,7 @@ const ifAuthenticated = (to, from, next) => {
         next()
         return
     }
-    next('/sign-in')
+    next('/admin/sign-in')
 }
 
 const routes = createRouter({
@@ -39,7 +39,7 @@ const routes = createRouter({
         },
         {
             name: 'SignIn',
-            path: '/sign-in',
+            path: '/admin/sign-in',
             component: SignIn,
             beforeEnter: ifNotAuthenticated,
         },

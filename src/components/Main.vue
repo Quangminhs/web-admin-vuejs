@@ -156,9 +156,17 @@ export default {
       currentTabComponent.value = module;
     }; 
 
+     const logout = () => {
+      console.log("logout");
+      localStorage.setItem("token", "");
+      localStorage.setItem("user", "");
+      router.push("/admin/sign-in");
+    };
+
     return {
       currentTabComponent,
-      menuItemClicked
+      menuItemClicked,
+      logout
     };
   },
 };
