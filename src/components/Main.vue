@@ -78,6 +78,19 @@
               <span class="mdc-list-item__text">Sản phẩm</span>
             </a>
             <a
+              @click="menuItemClicked('Categories')"
+              class="mdc-list-item"
+              href="#"
+            >
+              <span class="mdc-list-item__ripple"></span>
+              <i
+                class="material-icons mdc-list-item__graphic"
+                aria-hidden="true"
+                >category</i
+              >
+              <span class="mdc-list-item__text">Danh mục</span>
+            </a>
+            <a
               @click="menuItemClicked('Account')"
               class="mdc-list-item"
               href="#"
@@ -118,12 +131,14 @@
 <script>
 import { onMounted, ref } from "vue";
 
-import Account from "../components/Account.vue";
-import Product from "../components/Product.vue";
+import Account from "./account/Account.vue";
+import Product from "./product/Product.vue";
+import Categories from "./category/Categories.vue";
 import Statistics from "../components/Statistics.vue";
 import Order from "../components/Order.vue";
 import Settings from "../components/Settings.vue";
 import router from "../router/router.js";
+import { useRoute } from "vue-router";
 
 export default {
   name: "Main",
@@ -132,9 +147,14 @@ export default {
     Product,
     Statistics,
     Order,
+    Categories,
     Settings,
   },
   setup() {
+    const {
+      params: { focusTargetComponent },
+    } = useRoute();
+
     let currentTabComponent = ref("Statistics");
 
     onMounted(() => {
@@ -154,9 +174,9 @@ export default {
 
     const menuItemClicked = (module) => {
       currentTabComponent.value = module;
-    }; 
+    };
 
-     const logout = () => {
+    const logout = () => {
       console.log("logout");
       localStorage.setItem("token", "");
       localStorage.setItem("user", "");
@@ -166,7 +186,7 @@ export default {
     return {
       currentTabComponent,
       menuItemClicked,
-      logout
+      logout,
     };
   },
 };

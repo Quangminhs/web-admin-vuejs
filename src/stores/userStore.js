@@ -2,7 +2,10 @@ import {
     toRefs,
     reactive
 } from "vue";
-import {timewiseApi, timewiseAdminApi} from "../network/config.js";
+import {
+    timewiseAdminApi,
+    timewiseApi
+} from "../network/timewise_api";
 import {
     validateEmail,
     validatePass
@@ -19,7 +22,7 @@ export const useUser = () => {
     const doSignIn = async (email, pass) => {
         state.errEmail = null;
         state.errPass = null;
-        userListResponse: null;
+
         let hasError = false;
 
         if (!validateEmail(email)) {
@@ -58,6 +61,11 @@ export const useUser = () => {
         }
     };
 
+    const doLogout = () => {
+        localStorage.setItem("token", null);
+        localStorage.setItem("user", null);
+    };
+
     const getUserList = async () => {
         const response = await timewiseApi.get('/user/list').catch((e) => {
             if (e.response) {
@@ -76,7 +84,8 @@ export const useUser = () => {
     return {
         ...toRefs(state),
         doSignIn,
-        getUserList,
+        doLogout,
+        getUserList
     };
 
 }
